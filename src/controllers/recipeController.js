@@ -1,8 +1,5 @@
 const Recipe = require('../models/Recipe');
 
-/**
- * 🧁 Create a new recipe
- */
 exports.createRecipe = async (req, res, next) => {
   try {
     const recipe = new Recipe(req.body);
@@ -13,17 +10,15 @@ exports.createRecipe = async (req, res, next) => {
       data: recipe
     });
   } catch (error) {
-    // pass to centralized error handler
+   
     return next(error);
   }
 };
 
-/**
- * 🍲 Get all recipes
- */
+
 exports.getAllRecipes = async (req, res, next) => {
   try {
-    // debug log to confirm the route is reached
+  
     console.log('🟢 DEBUG: getAllRecipes called');
     const recipes = await Recipe.find().sort({ createdAt: -1 });
     console.log('🟢 DEBUG: found', recipes.length, 'recipes');
@@ -38,9 +33,7 @@ exports.getAllRecipes = async (req, res, next) => {
   }
 };
 
-/**
- * 🔍 Get one recipe by ID
- */
+
 exports.getRecipeById = async (req, res, next) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
@@ -49,14 +42,12 @@ exports.getRecipeById = async (req, res, next) => {
     }
     return res.status(200).json({ success: true, data: recipe });
   } catch (error) {
-    // handle invalid ObjectId or other errors
+   
     return next(error);
   }
 };
 
-/**
- * ✏️ Update recipe by ID
- */
+
 exports.updateRecipe = async (req, res, next) => {
   try {
     const updatedRecipe = await Recipe.findByIdAndUpdate(
@@ -77,9 +68,6 @@ exports.updateRecipe = async (req, res, next) => {
   }
 };
 
-/**
- * 🗑️ Delete recipe by ID
- */
 exports.deleteRecipe = async (req, res, next) => {
   try {
     const deletedRecipe = await Recipe.findByIdAndDelete(req.params.id);
@@ -95,10 +83,7 @@ exports.deleteRecipe = async (req, res, next) => {
   }
 };
 
-/**
- * 🔎 Optional: Search / filter recipes
- * GET /api/recipes/search?q=&tag=&minServ=&page=&limit=
- */
+
 exports.searchRecipes = async (req, res, next) => {
   try {
     let { q, tag, minServ, page = 1, limit = 10 } = req.query;
